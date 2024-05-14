@@ -1,388 +1,335 @@
-# SQL-PRECTICE
 
-Show first name, last name, and gender of patients whose gender is 'M'
+SQL Practice Solutions
+This document contains SQL queries that address various scenarios related to a healthcare database. The queries cover a range of operations including selections, updates, joins, aggregations, and more. Below are the questions and their corresponding solutions.
 
-select first_name ,last_name,gender from patients
-where gender like 'M';
-
-
-Show first name and last name of patients who does not have allergies. (null)
-select first_name ,last_name from patients
-where allergies is null;
-
-
-Show first name of patients that start with the letter 'C'
-select first_name from  patients
-where first_name like'c%';
-
-
-Show first name and last name of patients that weight within the range of 100 to 120 (inclusive)
-select first_name ,last_name from  patients
-where weight between 100 and 120;
-
-Update the patients table for the allergies column. If the patient's allergies is null then replace it with 'NKA'
-
-update patients
-set allergies ='NKA'
-where allergies is null;
-
-Show first name and last name concatinated into one column to show their full name.
-
-select concat(first_name," ",last_name) from patients;
-
-
-Show first name, last name, and the full province name of each patient.
-
-Example: 'Ontario' instead of 'ON'
-SELECT 
-   patients. first_name,
-     patients.last_name,
-    province_names.province_name
-FROM 
-    patients 
-JOIN 
-    province_names ON province_names.province_id = patients.province_id;
-
-
-
-    Show how many patients have a birth_date with 2010 as the birth year.
-    SELECT COUNT(*) AS num_patients_2010_birth_year
+Questions and Solutions
+1. Show first name, last name, and gender of patients whose gender is 'M'
+sql
+Copy code
+SELECT first_name, last_name, gender 
+FROM patients
+WHERE gender LIKE 'M';
+2. Show first name and last name of patients who do not have allergies (null)
+sql
+Copy code
+SELECT first_name, last_name 
+FROM patients
+WHERE allergies IS NULL;
+3. Show first name of patients that start with the letter 'C'
+sql
+Copy code
+SELECT first_name 
+FROM patients
+WHERE first_name LIKE 'C%';
+4. Show first name and last name of patients that weigh within the range of 100 to 120 (inclusive)
+sql
+Copy code
+SELECT first_name, last_name 
+FROM patients
+WHERE weight BETWEEN 100 AND 120;
+5. Update the patients table for the allergies column. If the patient's allergies are null then replace it with 'NKA'
+sql
+Copy code
+UPDATE patients
+SET allergies = 'NKA'
+WHERE allergies IS NULL;
+6. Show first name and last name concatenated into one column to show their full name
+sql
+Copy code
+SELECT CONCAT(first_name, " ", last_name) AS full_name 
+FROM patients;
+7. Show first name, last name, and the full province name of each patient
+sql
+Copy code
+SELECT patients.first_name, patients.last_name, province_names.province_name
+FROM patients 
+JOIN province_names ON province_names.province_id = patients.province_id;
+8. Show how many patients have a birth_date with 2010 as the birth year
+sql
+Copy code
+SELECT COUNT(*) AS num_patients_2010_birth_year
 FROM patients
 WHERE YEAR(birth_date) = 2010;
-
-
-Show the first_name, last_name, and height of the patient with the greatest height.
-select first_name ,last_name,height  from patients
-
-order by  height desc
-limit 1;
-Show all columns for patients who have one of the following patient_ids:
-1,45,534,879,1000
-
-select * from patients 
-where patient_id in  (1,45,534,879,1000);
-
-Show the total number of admissions
-
-select count(admission_date) as total_admissions from admissions;
-
-Show all the columns from admissions where the patient was admitted and discharged on the same day.
-
-select * from admissions
-where admission_date = discharge_date;
-
-Show the patient id and the total number of admissions for patient_id 579.
-
-select patient_id ,count(admission_date) from admissions
-where patient_id  = 579;
-
-Based on the cities that our patients live in, show unique cities that are in province_id 'NS'?
-select distinct(city) from patients
-where province_id ='NS';
-
-
-Write a query to find the first_name, last name and birth date of patients who has height greater than 160 and weight greater than 70
-select first_name ,last_name ,birth_date from patients
-where height>160 and weight>70;
-
-Write a query to find list of patients first_name, last_name, and allergies where allergies are not null and are from the city of 'Hamilton'
-
-select first_name,last_name ,allergies from patients
-where allergies is not null and city ='Hamilton';
-
-
-
-Show all patient's first_name, last_name, and birth_date who were born in the 1970s decade. Sort the list starting from the earliest birth_date.
-select first_name ,last_name, birth_date from patients
-where year(birth_date) between 1970 and 1979
-
-order by birth_date asc;
-
-Show unique first names from the patients table which only occurs once in the list.
-
-For example, if two or more people are named 'John' in the first_name column then don't include their name in the output list. If only 1 person is named 'Leo' then include them in the output.
-
+9. Show the first name, last name, and height of the patient with the greatest height
+sql
+Copy code
+SELECT first_name, last_name, height 
+FROM patients
+ORDER BY height DESC
+LIMIT 1;
+10. Show all columns for patients who have one of the following patient_ids: 1, 45, 534, 879, 1000
+sql
+Copy code
+SELECT * 
+FROM patients 
+WHERE patient_id IN (1, 45, 534, 879, 1000);
+11. Show the total number of admissions
+sql
+Copy code
+SELECT COUNT(admission_date) AS total_admissions 
+FROM admissions;
+12. Show all the columns from admissions where the patient was admitted and discharged on the same day
+sql
+Copy code
+SELECT * 
+FROM admissions
+WHERE admission_date = discharge_date;
+13. Show the patient id and the total number of admissions for patient_id 579
+sql
+Copy code
+SELECT patient_id, COUNT(admission_date) AS total_admissions 
+FROM admissions
+WHERE patient_id = 579;
+14. Show unique cities that are in province_id 'NS'
+sql
+Copy code
+SELECT DISTINCT city 
+FROM patients
+WHERE province_id = 'NS';
+15. Find the first name, last name, and birth date of patients who have a height greater than 160 and weight greater than 70
+sql
+Copy code
+SELECT first_name, last_name, birth_date 
+FROM patients
+WHERE height > 160 AND weight > 70;
+16. List patients' first name, last name, and allergies where allergies are not null and they are from the city of 'Hamilton'
+sql
+Copy code
+SELECT first_name, last_name, allergies 
+FROM patients
+WHERE allergies IS NOT NULL AND city = 'Hamilton';
+17. Show all patients' first name, last name, and birth_date who were born in the 1970s decade. Sort the list starting from the earliest birth_date
+sql
+Copy code
+SELECT first_name, last_name, birth_date 
+FROM patients
+WHERE YEAR(birth_date) BETWEEN 1970 AND 1979
+ORDER BY birth_date ASC;
+18. Show unique first names from the patients table which only occur once
+sql
+Copy code
 SELECT first_name
 FROM patients
 GROUP BY first_name
 HAVING COUNT(*) = 1;
-
-Show patient_id and first_name from patients where their first_name start and ends with 's' and is at least 6 characters long.
-
-select patient_id ,first_name from patients
-where  first_name like 's%____s';
-
-
-Show patient_id, first_name, last_name from patients whos diagnosis is 'Dementia'.
-
-Primary diagnosis is stored in the admissions table.
-
+19. Show patient_id and first_name from patients where their first_name starts and ends with 's' and is at least 6 characters long
+sql
+Copy code
+SELECT patient_id, first_name 
+FROM patients
+WHERE first_name LIKE 's%____s';
+20. Show patient_id, first_name, and last_name from patients whose diagnosis is 'Dementia'
+sql
+Copy code
 SELECT patients.patient_id, patients.first_name, patients.last_name 
 FROM patients
 JOIN admissions ON patients.patient_id = admissions.patient_id
 WHERE admissions.diagnosis = 'Dementia';
-
-
-Display every patient's first_name.
-Order the list by the length of each name and then by alphabetically.
-
-select first_name from patients
-order by len(first_name),first_name;
-
-Show the total amount of male patients and the total amount of female patients in the patients table.
-Display the two results in the same row.
-
-SELECT COUNT(CASE WHEN gender = 'M' THEN 1 END) AS male_count,
-       COUNT(CASE WHEN gender = 'F' THEN 1 END) AS female_count
-FROM patients;
-
-Show first and last name, allergies from patients which have allergies to either 'Penicillin' or 'Morphine'. Show results ordered ascending by allergies then by first_name then by last_name.
-SELECT 
-    first_name, 
-    last_name, 
-    allergies 
-FROM 
-    patients
-WHERE 
-    allergies IN ('Penicillin', 'Morphine')
-ORDER BY 
-    allergies ASC, 
-    first_name ASC, 
-    last_name ASC;
-
-    Show patient_id, diagnosis from admissions. Find patients admitted multiple times for the same diagnosis.
-    select patient_id ,diagnosis from admissions
-group by  patient_id,diagnosis
-having   count(*)>1;
-
-Show the city and the total number of patients in the city.
-Order from most to least patients and then by city name ascending.
-
-select  city, count(distinct patient_id)  as num_patients from patients
-group by city
-
-order by num_patients desc,city asc;
-
-
-Show first name, last name and role of every person that is either patient or doctor.
-The roles are either "Patient" or "Doctor"
-
-SELECT first_name, last_name, 'Patient' AS role
+21. Display every patient's first_name ordered by the length of each name and then alphabetically
+sql
+Copy code
+SELECT first_name 
 FROM patients
-UNION all
-SELECT first_name, last_name, 'Doctor' AS role
+ORDER BY LENGTH(first_name), first_name;
+22. Show the total number of male and female patients in the patients table
+sql
+Copy code
+SELECT 
+    COUNT(CASE WHEN gender = 'M' THEN 1 END) AS male_count,
+    COUNT(CASE WHEN gender = 'F' THEN 1 END) AS female_count
+FROM patients;
+23. Show first and last name, allergies from patients who have allergies to either 'Penicillin' or 'Morphine'. Show results ordered ascending by allergies then by first name then by last name
+sql
+Copy code
+SELECT first_name, last_name, allergies 
+FROM patients
+WHERE allergies IN ('Penicillin', 'Morphine')
+ORDER BY allergies ASC, first_name ASC, last_name ASC;
+24. Show patient_id and diagnosis from admissions for patients admitted multiple times for the same diagnosis
+sql
+Copy code
+SELECT patient_id, diagnosis 
+FROM admissions
+GROUP BY patient_id, diagnosis
+HAVING COUNT(*) > 1;
+25. Show the city and the total number of patients in the city. Order from most to least patients and then by city name ascending
+sql
+Copy code
+SELECT city, COUNT(DISTINCT patient_id) AS num_patients 
+FROM patients
+GROUP BY city
+ORDER BY num_patients DESC, city ASC;
+26. Show first name, last name, and role of every person that is either a patient or doctor
+sql
+Copy code
+SELECT first_name, last_name, 'Patient' AS role 
+FROM patients
+UNION ALL
+SELECT first_name, last_name, 'Doctor' AS role 
 FROM doctors;
-
-
-
-Show all allergies ordered by popularity. Remove NULL values from query.
-
-SELECT allergies, COUNT(*) AS total_diagnosis
+27. Show all allergies ordered by popularity. Remove NULL values from the query
+sql
+Copy code
+SELECT allergies, COUNT(*) AS total_diagnosis 
 FROM patients
 WHERE allergies IS NOT NULL
 GROUP BY allergies
 ORDER BY total_diagnosis DESC;
-
-Show all patient's first_name, last_name, and birth_date who were born in the 1970s decade. Sort the list starting from the earliest birth_date.
-
-select first_name ,last_name, birth_date from patients
-where year(birth_date) between 1970 and 1979
-
-order by birth_date asc;
-
-
-We want to display each patient's full name in a single column. Their last_name in all upper letters must appear first, then first_name in all lower case letters. Separate the last_name and first_name with a comma. Order the list by the first_name in decending order
-EX: SMITH,jane
-
-SELECT CONCAT(UPPER(last_name), ',', LOWER(first_name)) AS new_name_format
+28. Show patient's full name in a specific format, sorted by first_name in descending order
+sql
+Copy code
+SELECT CONCAT(UPPER(last_name), ',', LOWER(first_name)) AS new_name_format 
 FROM patients
 ORDER BY first_name DESC;
-
-Show the province_id(s), sum of height; where the total sum of its patient's height is greater than or equal to 7,000.
-
-select province_id , sum(height) as sum_height from patients
-group by province_id
-having sum(height)>=7000
-order by  sum_height asc;
-
-
-Show the difference between the largest weight and smallest weight for patients with the last name 'Maroni'
-select max(weight)-min(weight)  as weight_delta from patients
-where last_name is 'Maroni';
-
-Show all of the days of the month (1-31) and how many admission_dates occurred on that day. Sort by the day with most admissions to least admissions.
-
+29. Show the province_id(s) and sum of height where the total sum of its patient's height is greater than or equal to 7,000
+sql
+Copy code
+SELECT province_id, SUM(height) AS sum_height 
+FROM patients
+GROUP BY province_id
+HAVING SUM(height) >= 7000
+ORDER BY sum_height ASC;
+30. Show the difference between the largest and smallest weight for patients with the last name 'Maroni'
+sql
+Copy code
+SELECT MAX(weight) - MIN(weight) AS weight_delta 
+FROM patients
+WHERE last_name = 'Maroni';
+31. Show the days of the month (1-31) and how many admission_dates occurred on that day. Sort by the day with most admissions to least admissions
+sql
+Copy code
 SELECT DAY(admission_date) AS day_number, COUNT(*) AS num_of_admissions 
 FROM admissions
 GROUP BY DAY(admission_date)
-ORDER BY num_of_admissions DESC, day_number desc;
-
-Show all columns for patient_id 542's most recent admission_date.
-
-SELECT *
+ORDER BY num_of_admissions DESC, day_number DESC;
+32. Show all columns for patient_id 542's most recent admission_date
+sql
+Copy code
+SELECT * 
 FROM admissions
 WHERE patient_id = 542
 ORDER BY admission_date DESC
 LIMIT 1;
-
-
-Show patient_id, attending_doctor_id, and diagnosis for admissions that match one of the two criteria:
-1. patient_id is an odd number and attending_doctor_id is either 1, 5, or 19.
-2. attending_doctor_id contains a 2 and the length of patient_id is 3 characters.
-
- SELECT patient_id, attending_doctor_id, diagnosis  
+33. Show patient_id, attending_doctor_id, and diagnosis for admissions matching specific criteria
+sql
+Copy code
+SELECT patient_id, attending_doctor_id, diagnosis 
 FROM admissions 
 WHERE 
-    (patient_id % 2 != 0 AND attending_doctor_id IN (1, 5, 19))
-    OR 
+    (patient_id % 2 != 0 AND attending_doctor_id IN (1, 5, 19)) OR 
     (attending_doctor_id LIKE '%2%' AND LENGTH(patient_id) = 3)
 ORDER BY attending_doctor_id;
-
-
-Show first_name, last_name, and the total number of admissions attended for each doctor.
-
-Every admission has been attended by a doctor.
-
-SELECT doctors.first_name, doctors.last_name, COUNT(admissions.admission_date) AS total_admissions
+34. Show first name, last name, and the total number of admissions attended for each doctor
+sql
+Copy code
+SELECT doctors.first_name, doctors.last_name, COUNT(admissions.admission_date) AS total_admissions 
 FROM doctors
 JOIN admissions ON doctors.doctor_id = admissions.attending_doctor_id
 GROUP BY doctors.first_name, doctors.last_name;
-
-
-For each doctor, display their id, full name, and the first and last admission date they attended.
-
-
-SELECT 
-    doctors.doctor_id, 
-    CONCAT(doctors.first_name, ' ', doctors.last_name) AS full_name,
-    MIN(admissions.admission_date) AS first_admission,
-    MAX(admissions.admission_date) AS last_admission
-FROM 
-    doctors
-JOIN 
-    admissions ON doctors.doctor_id = admissions.attending_doctor_id
-GROUP BY 
-    doctors.doctor_id, 
-    full_name;
-
-    Display the total amount of patients for each province. Order by descending.
-
-    SELECT 
-    province_names.province_name,
-    COUNT(*) AS patients_counts
-FROM 
-    patients
-JOIN 
-    province_names ON patients.province_id = province_names.province_id
-GROUP BY 
-    province_names.province_name
-ORDER BY 
-    patients_counts DESC;
-
-    For every admission, display the patient's full name, their admission diagnosis, and their doctor's full name who diagnosed their problem.
-
-    SELECT CONCAT(patients.first_name, ' ', patients.last_name) AS patient_name,
+35. For each doctor, display their id, full name, and the first and last admission date they attended
+sql
+Copy code
+SELECT doctors.doctor_id, 
+       CONCAT(doctors.first_name, ' ', doctors.last_name) AS full_name,
+       MIN(admissions.admission_date) AS first_admission,
+       MAX(admissions.admission_date) AS last_admission 
+FROM doctors
+JOIN admissions ON doctors.doctor_id = admissions.attending_doctor_id
+GROUP BY doctors.doctor_id, full_name;
+36. List the ids and full names of all doctors who have never attended an admission
+sql
+Copy code
+SELECT doctor_id, CONCAT(first_name, ' ', last_name) AS full_name 
+FROM doctors 
+WHERE doctor_id NOT IN (SELECT DISTINCT attending_doctor_id FROM admissions);
+37. Show all columns of patients who were admitted more than once
+sql
+Copy code
+SELECT * 
+FROM patients 
+WHERE patient_id IN (SELECT patient_id FROM admissions GROUP BY patient_id HAVING COUNT(*) > 1);
+38. Show all columns from doctors who have the specialty of 'Cardiology'
+sql
+Copy code
+SELECT * 
+FROM doctors 
+WHERE specialty = 'Cardiology';
+39. Show first name, last name, diagnosis, and the total number of admissions for each unique combination
+sql
+Copy code
+SELECT patients.first_name, patients.last_name, admissions.diagnosis, COUNT(*) AS total_admissions 
+FROM patients
+JOIN admissions ON patients.patient_id = admissions.patient_id
+GROUP BY patients.first_name, patients.last_name, admissions.diagnosis;
+40. Show first name, last name, birth date, gender of patients born in 1990 and sort by last name in descending order
+sql
+Copy code
+SELECT first_name, last_name, birth_date, gender 
+FROM patients
+WHERE YEAR(birth_date) = 1990
+ORDER BY last_name DESC;
+41. Show the full name of patients along with their admission diagnosis and their doctor's full name
+sql
+Copy code
+SELECT CONCAT(patients.first_name, ' ', patients.last_name) AS patient_name,
        admissions.diagnosis,
        CONCAT(doctors.first_name, ' ', doctors.last_name) AS doctor_name
 FROM admissions
 JOIN patients ON patients.patient_id = admissions.patient_id
 JOIN doctors ON admissions.attending_doctor_id = doctors.doctor_id;
-
-display the first name, last name and number of duplicate patients based on their first name and last name.
-
-Ex: A patient with an identical name can be considered a duplicate
-
-select  first_name ,last_name,count(*) as  num_of_duplicate from patients
-group by first_name,last_name
-having count(*)>1;
-
-Display patient's full name,
-height in the units feet rounded to 1 decimal,
-weight in the unit pounds rounded to 0 decimals,
-birth_date,
-gender non abbreviated.
-
-Convert CM to feet by dividing by 30.48.
-Convert KG to pounds by multiplying by 2.205.
-
+42. Display first name, last name, and number of duplicate patients based on their first name and last name
+sql
+Copy code
+SELECT first_name, last_name, COUNT(*) AS num_of_duplicate 
+FROM patients
+GROUP BY first_name, last_name
+HAVING COUNT(*) > 1;
+43. Display patient's full name, height in feet (rounded to 1 decimal), weight in pounds (rounded to 0 decimals), birth_date, and gender non-abbreviated
+sql
+Copy code
 SELECT 
     CONCAT(first_name, ' ', last_name) AS 'Full Name',
     ROUND(height / 30.48, 1) AS 'Height',
     ROUND(weight * 2.205, 0) AS 'Weight',
     birth_date,
-
     CASE
         WHEN gender = 'M' THEN 'male'
         WHEN gender = 'F' THEN 'female'
-    END
-FROM 
-    patients;
-
-
-
-
-
-
-
-
-    Show patient_id, first_name, last_name from patients whose does not have any records in the admissions table. (Their patient_id does not exist in any admissions.patient_id rows.)
-
-    SELECT patient_id, first_name, last_name 
+    END AS gender
+FROM patients;
+44. Show patient_id, first_name, last_name from patients who do not have any records in the admissions table
+sql
+Copy code
+SELECT patient_id, first_name, last_name 
 FROM patients
 WHERE patient_id NOT IN (SELECT patient_id FROM admissions);
-
-
-
-Show all of the patients grouped into weight groups.
-Show the total amount of patients in each weight group.
-Order the list by the weight group decending.
-
-For example, if they weight 100 to 109 they are placed in the 100 weight group, 110-119 = 110 weight group, etc.
-select floor(patients.weight/10)*10 as weight_group, count(*) as patients_in_group
-from patients
-group by floor(patients.weight/10)
-order by floor(patients.weight/10) desc;
-
-
-Show patient_id, weight, height, isObese from the patients table.
-
-Display isObese as a boolean 0 or 1.
-
-Obese is defined as weight(kg)/(height(m)2) >= 30.
-
-weight is in units kg.
-
-height is in units cm.
-
+45. Show all patients grouped into weight groups and total amount of patients in each weight group
+sql
+Copy code
+SELECT FLOOR(patients.weight / 10) * 10 AS weight_group, COUNT(*) AS patients_in_group
+FROM patients
+GROUP BY FLOOR(patients.weight / 10)
+ORDER BY FLOOR(patients.weight / 10) DESC;
+46. Show patient_id, weight, height, isObese from patients table
+sql
+Copy code
 SELECT 
     patient_id,
     weight,
     height,
     CASE WHEN (weight / POWER(height / 100.0, 2)) >= 30 THEN 1 ELSE 0 END AS isObese
-FROM 
-    patients;
-
-    
-Show patient_id, first_name, last_name, and attending doctor's specialty.
-Show only the patients who has a diagnosis as 'Epilepsy' and the doctor's first name is 'Lisa'
-
-Check patients, admissions, and doctors tables for required information.
-
+FROM patients;
+47. Show patient_id, first_name, last_name, and attending doctor's specialty for patients diagnosed with 'Epilepsy' by a doctor named 'Lisa'
+sql
+Copy code
 SELECT patients.patient_id, patients.first_name, patients.last_name, doctors.specialty
 FROM patients
-
 JOIN admissions ON patients.patient_id = admissions.patient_id
 JOIN doctors ON admissions.attending_doctor_id = doctors.doctor_id
-
 WHERE diagnosis = 'Epilepsy' AND doctors.first_name LIKE '%Lisa%';
-
-All patients who have gone through admissions, can see their medical documents on our site. Those patients are given a temporary password after their first admission. Show the patient_id and temp_password.
-
-The password must be the following, in order:
-1. patient_id
-2. the numerical length of patient's last_name
-3. year of patient's birth_date
-
+48. Show patient_id and temp_password for patients who have gone through admissions
+sql
+Copy code
 SELECT
   patients.patient_id,
   CONCAT(
@@ -391,30 +338,25 @@ SELECT
     YEAR(birth_date)
   ) AS temp_password
 FROM patients 
-  join admissions on patients.patient_id =admissions.patient_id
+JOIN admissions ON patients.patient_id = admissions.patient_id
 GROUP BY patients.patient_id;
-
-
-
-
-Each admission costs $50 for patients without insurance, and $10 for patients with insurance. All patients with an even patient_id have insurance.
-
-Give each patient a 'Yes' if they have insurance, and a 'No' if they don't have insurance. Add up the admission_total cost for each has_insurance group
-
+49. Show total admission cost for each insurance group
+sql
+Copy code
 SELECT
   'Yes' AS has_insurance,
-  COUNT (*) * 10 cost_after_insurance
+  COUNT(*) * 10 AS cost_after_insurance
 FROM admissions
 WHERE patient_id % 2 = 0
 UNION
 SELECT
   'No' AS has_insurance,
-  COUNT (*) * 50 cost_after_insurance
+  COUNT(*) * 50 AS cost_after_insurance
 FROM admissions
-WHERE patient_id % 2 != 0
-
-
-Show the provinces that has more patients identified as 'M' than 'F'. Must only show full province_name
+WHERE patient_id % 2 != 0;
+50. Show provinces with more male patients than female patients
+sql
+Copy code
 SELECT 
     province_names.province_name
 FROM 
@@ -427,17 +369,9 @@ GROUP BY
     province_names.province_name
 HAVING 
     COUNT(CASE WHEN patients.gender = 'M' THEN 1 END) > COUNT(CASE WHEN patients.gender = 'F' THEN 1 END);
-
-
-
-    We are looking for a specific patient. Pull all columns for the patient who matches the following criteria:
-- First_name contains an 'r' after the first two letters.
-- Identifies their gender as 'F'
-- Born in February, May, or December
-- Their weight would be between 60kg and 80kg
-- Their patient_id is an odd number
-- They are from the city 'Kingston
-
+51. Pull all columns for a specific patient matching given criteria
+sql
+Copy code
 SELECT *
 FROM patients
 WHERE first_name LIKE '__r%'
@@ -445,49 +379,41 @@ WHERE first_name LIKE '__r%'
   AND MONTH(birth_date) IN (2, 5, 12)
   AND weight BETWEEN 60 AND 80
   AND MOD(patient_id, 2) != 0
-
-  Show the percent of patients that have 'M' as their gender. Round the answer to the nearest hundreth number and in percent form.
+  AND city = 'Kingston';
+52. Show the percentage of patients with 'M' as their gender
+sql
+Copy code
 SELECT
-concat( round(100 * avg(gender = 'M'), 2), '%') 
-AS percent_of_male_patients
+  CONCAT(ROUND(100 * AVG(gender = 'M'), 2), '%') AS percent_of_male_patients
 FROM patients;
-
-
-For each day display the total amount of admissions on that day. Display the amount changed from the previous date.
+53. Display total admissions per day and the change from the previous date
+sql
+Copy code
 SELECT 
     admission_date, 
     COUNT(admission_date) AS admission_count,
     COUNT(admission_date) - LAG(COUNT(admission_date), 1) OVER (ORDER BY admission_date) AS change_from_previous_day
-FROM 
-    admissions 
-GROUP BY 
-    admission_date 
-ORDER BY 
-    admission_date ASC;
-
-
-    Sort the province names in ascending order in such a way that the province 'Ontario' is always on top.
-
-    select province_name from province_names  
-order by
-(case when province_name='Ontario' then 0 else 1 end),
-province_name
-
-
-We need a breakdown for the total amount of admissions each doctor has started each year. Show the doctor_id, doctor_full_name, specialty, year, total_admissions for that year.
-
+FROM admissions 
+GROUP BY admission_date 
+ORDER BY admission_date ASC;
+54. Sort province names with 'Ontario' always on top
+sql
+Copy code
+SELECT province_name 
+FROM province_names
+ORDER BY
+    CASE WHEN province_name = 'Ontario' THEN 0 ELSE 1 END,
+    province_name;
+55. Breakdown of total admissions each doctor has started each year
+sql
+Copy code
 SELECT
-  d.doctor_id as doctor_id,
-  CONCAT(d.first_name,' ', d.last_name) as doctor_name,
+  d.doctor_id AS doctor_id,
+  CONCAT(d.first_name, ' ', d.last_name) AS doctor_name,
   d.specialty,
-  YEAR(a.admission_date) as selected_year,
-  COUNT(*) as total_admissions
-FROM doctors as d
-  LEFT JOIN admissions as a ON d.doctor_id = a.attending_doctor_id
-GROUP BY
-  doctor_name,
-  selected_year
-ORDER BY doctor_id, selected_year
-  AND city = 'Kingston';
-
-  
+  YEAR(a.admission_date) AS selected_year,
+  COUNT(*) AS total_admissions
+FROM doctors AS d
+LEFT JOIN admissions AS a ON d.doctor_id = a.attending_doctor_id
+GROUP BY doctor_id, doctor_name, d.specialty, selected_year
+ORDER BY doctor_id, selected_year;
